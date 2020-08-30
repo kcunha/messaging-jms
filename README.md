@@ -9,3 +9,14 @@ Although I put sender/receiver at the same application, for this example I wante
 The goal is to see different applications working together in K8S environment.
 
 Have Fun!
+
+Use this to set the current context 
+kubectl config set-context --current --namespace=karen-dev
+
+$ minikube -p karen.dev service -n karen-dev sender --url => Comand to open the sender app in a browser
+http://{given_url}/swagger-ui.html#/producer => to send message to activemq queue
+Check the logs at receiver app to see the message received
+$ kubectl logs {pod_name} -f
+
+To see the pods name
+$ kubectl get pods
