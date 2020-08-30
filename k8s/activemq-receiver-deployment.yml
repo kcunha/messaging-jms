@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: receiver
+  namespace: karen-dev
+  labels:
+    app: receiverapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: receiverapp
+  template:
+      metadata:
+        labels:
+          app: receiverapp
+      spec:
+        containers:
+          - name: receiverapp
+            image: activemq-receiver:latest
+            imagePullPolicy: Never
+            ports:
+              - containerPort: 8080
+                name: http
+            envFrom:
+              - configMapRef:
+                  name: configapp
+            env:
+              - name: SERVER_PORT
+                value: "8080"
+            livenessProbe:
+              httpGet:
+                path: /actuator/health/liveness
+                port: 8080
+              initialDelaySeconds: 30
+            readinessProbe:
+              httpGet:
+                path: /actuator/health/readiness
+                port: 8080
+              initialDelaySeconds: 30

@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+
+  sender:
+    image: kcaraujo/activemq-sender
+    container_name: activemq-sender
+    build:
+      dockerfile: Dockerfile.sender
+      context: .
+    env_file:
+      - .env
+    environment:
+      - SERVER_PORT=8081
+    ports:
+      - 8081:8081
+
+#  receiver:
+#    image: kcaraujo/activemq-receiver
+#    container_name: activemq-receiver
+#    network_mode: host
+#    build:
+#      dockerfile: Dockerfile.receiver
+#      context: .
+#    env_file:
+#      - .env
+#    environment:
+#      - SERVER_PORT=8085
+#    ports:
+#      - 8085:8085
+#     

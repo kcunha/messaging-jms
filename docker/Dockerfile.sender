@@ -1,0 +1,6 @@
+FROM openjdk:8-alpine
+RUN mkdir /usr/myapp
+COPY messaging-jms-sender.jar /usr/myapp/app.jar
+WORKDIR /usr/myapp
+EXPOSE 8080
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -jar app.jar" ]
